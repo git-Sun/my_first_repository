@@ -11,3 +11,4 @@ void main()
      getch();
 	return 0;
 }
+/*.c 文件。显示accsii码*/
