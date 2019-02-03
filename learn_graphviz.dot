@@ -1,0 +1,116 @@
+// graphviz 逻辑绘图工具使用
+//2019-2-2 晚上
+
+strict graph G {
+  //图属性设置：
+    rankdir=LR  //左右布局
+	label = "谱系图"  //图的名字
+	//labelloc = b  //b为底部（默认）t 在顶部
+	//labeljust = l | r  //名字在图的左或者右
+	// size = ”8,8“  //图片大小8inch X 8 inch
+	
+  //图形元素设置
+	node [style = filled,
+		fillcolor = skyblue,  //节点填充
+		shape=ellipse  //节点形状：椭圆
+	]//图片的node：shape设置为none，label设置为空
+	
+	edge [arrowhead = diamond ]  //style=dashed 虚线
+	//dir ：指向：forward，back，both双向，none
+  //节点，线的属性设置
+	爷 [shape=polygon,distortion=.5,peripheries=5,sides=6,regular=true]
+	儿子 [shape=star]
+	女儿 [shape=box3d]
+  //节点逻辑关系
+	爷 -- 儿子 [weight=3];
+	儿子 -- {孙女 孙子}[weight=8];
+	姥爷 -- 女儿 [headlabel=开头,label=中间,taillabel=结尾];  //连线的标签位置
+	女儿 -- {外甥 外甥女};
+  //子图
+	subgraph cluster_asd {  //名字必须以cluster开头
+		label=重点标记子图
+		//bgcolor=blue
+		style=dashed
+		node [shape = record]  //mrecord ：圆角距形
+		
+		媳妇 [shape=underline]
+		儿子 -- 媳妇 [label=夫妻关系];
+	}
+}
+digraph S { 
+	node [shape=record]; 
+	edge [shape=tee]
+	struct1 [label=" left|<f1> middle|<f2> right"]; 
+	struct2 [label="<f0> one|<f1> two",style=filled,fillcolor=grey77]; 
+	struct3 [label="hello&#92;nworld |{ b |{c| d|e}| f}|<here> g | h"]; 
+	struct1:f1 -> struct2:f0; struct1:f2 -> struct3:here; //标记箭头指向的位置
+}
+
+
+/* man 给出的示例
+digraph test123 {
+               a -> b -> c;
+               a -> {x y};
+               b [shape=box];
+               c [label="hello\nworld",color=blue,fontsize=24,
+                    fontname="Palatino-Italic",fontcolor=red,style=filled];
+               a -> z [label="hi", weight=100];
+               x -> z [label="multi-line\nlabel"];
+               edge [style=dashed,color=red];
+               b -> x;
+               {rank=same; b x}
+       }
+
+graph test123 {
+               a -- b -- c;
+               a -- {x y};
+               x -- c [w=10.0];
+               x -- y [w=5.0,len=3];
+       }
+*/
+
+/* 
+命令：
+	dot -Tsvg  learn.dot  -o learn.svg 
+	dot -Tsvg  learn.dot  -O  //自动生成文件名
+	
+	
+可用命令名：
+	dot - filter for drawing directed graphs
+    neato - filter for drawing undirected graphs
+    twopi - filter for radial layouts of graphs 径向
+    circo - filter for circular layout of graphs  圆环
+    fdp - filter for drawing undirected graphs 无向
+    sfdp - filter for drawing large undirected graphs
+    patchwork - filter for squarified tree maps
+    osage - filter for array-based layouts
+输出选项：
+	-Tdot 
+	-Txdot  dot 格式存储全部的布局信息
+	-Tps  postscript
+	-Tpdf
+	-Tsvg
+	-Tfig
+	-Tpng
+	-Tgif
+	-Tjpg
+	-Tjson
+	-Timap
+语法：
+	{strict（多条边） graph(无向图) digraph（有向图）} name
+	node [属性设置]
+	edge [属性设置]
+	[subgraph ] name 
+属性：
+	shape=polygon,distortion=.5,peripheries=5,sides=13,regular=true
+	// 正13边形，5层边框，透明度0.5
+	fontcolor，fontsize，fontname：字体相关设置
+	
+默认值：
+	默认utf-8编码可以输入数字
+	可用的节点shape：https://graphviz.gitlab.io/_pages/doc/info/shapes.html
+	可用的箭头属性：https://graphviz.gitlab.io/_pages/doc/info/arrows.html
+	可用的颜色列表：https://graphviz.gitlab.io/_pages/doc/info/colors.html
+	官方文档；https://graphviz.gitlab.io/documentation/
+	
+*/
