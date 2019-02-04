@@ -11,6 +11,7 @@
 - go
 - rust
 - ruby
+- lua
 - 
 #### 应用技术:
 - markdown/mathjex: 快速编写文档(latex数学公式)
