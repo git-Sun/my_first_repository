@@ -28,9 +28,23 @@ vector<string> line2vec(string& sentence)//utf8串转换为字符向量：方法
 
 
 
-//快速排序
 
 
+/****************无注释·泛型版～快速排序**********************/
+template<typename T>
+void show_data(vector<T> data){
+	cout << endl;
+	for(auto iter:data){
+		cout << iter << " ";
+	}
+}
+template<typename T>
+void bi_swap(T& A,T& B){
+	static T C = 0;
+	C = A;
+	A = B;
+	B = C;
+}
 
 template<typename T>
 int flat1(vector<T>& data, int start, int end){
